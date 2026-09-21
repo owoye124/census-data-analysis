@@ -1,89 +1,70 @@
-# 📊 Census Data Analysis  
-### A Data-Driven Strategy for Growth and Investment
+Census Data Analysis
+A small town sits between two larger cities. The local council has one unoccupied plot of land and a limited budget. What should they build, and where should the money go after that?
 
-This repository showcases a complete data science workflow that turns raw census data into clear, evidence-based insights for community development and investment planning.
+This project answers both questions from a census of 7,773 residents, and the answer is a train station.
+What the data said
+Finding
+Town
+England and Wales (2021)
+Adults who are likely commuters
+79.2%
+—
+Unemployment rate
+8.75%
+4.3%
+People per household
+2.60
+2.4
+Largest age band
+35–39, then 40–44
+—
+School-age share
+17.79%
+—
 
-The technical analysis is implemented in a Jupyter Notebook, while a detailed PDF report translates the results into practical, real-world recommendations for decision-makers.
 
----
+The commuter figure is the one that decides it. Nearly four in five working-age adults either work or study, and the town sits between two cities joined by a single motorway. Every one of those journeys is currently a car journey.
 
-## 🔍 Project Overview
+Unemployment running at double the national rate looks alarming until you see where it sits: concentrated in the 40 to 64 group, so it's a mid-career and pre-retirement problem rather than a young-workforce one. Different problem, different fix.
 
-The goal of this project is to demonstrate how demographic data can be used to guide smarter planning and investment decisions.
+Household size slightly above the national average, with a high count of one and two person households, points to demand for smaller higher-density units rather than family housing.
+Recommendations
+Build the train station. 79.2% commuter dependency against one motorway is the clearest pressure in the data. Rail takes cars off that road and reaches the largest share of the population.
 
-Using census data, I carried out structured data cleaning, statistical analysis, and visual exploration to answer key questions around:
-- Population structure and dependency trends  
-- Housing demand and household composition  
-- Transport and infrastructure needs  
-- Healthcare and ageing-population priorities  
+Housing came second and was ruled out for now. Demand exists, but at 2.60 people per house the existing stock isn't overcrowded, so it isn't urgent. A Methodist place of worship is the one real gap in religious provision, and that can be privately funded. An emergency medical building isn't supported: infirmity rates are low and pregnancies are moderate.
 
-This project balances technical accuracy with clear communication, making the insights accessible beyond a purely technical audience.
+Then invest in general infrastructure, then elderly care. A station attracts residents, and the existing facilities have to absorb them. After that, the pre-retirement bulge in the population pyramid becomes a care problem within about five years. Schools and employment training both matter less: the school-age share is manageable and the unemployment picture calls for targeted retraining, not a large programme.
+Data cleaning
+The messy part, and most of the work. The raw file had 1,813 missing marital statuses, 474 missing household relationships, 7,721 blank infirmity fields and scattered blanks elsewhere.
 
----
+Rather than dropping rows or filling with a column mean, missing values were inferred from household structure:
 
-## 📁 Repository Structure
-├── census.ipynb
-│ └── Full data cleaning, analysis, visualisation, and insights
-│
-├── FUNDAMENTALS OF DATA SCIENCE PROJECT.pdf
-│ └── Detailed written report explaining methods, results, and recommendations
-│
+Relationship to head of house. Ranked every household by age, made the oldest person the head, demoted duplicate heads to other relatives. Minors listed as head were reassigned to son or daughter by gender.
+Marital status. Anyone under 18 became Not Applicable, following the 2022 Act raising the minimum marriage age. Missing values where the relationship column said husband or wife became married. Remaining blanks over 65 became widowed, the rest single.
+Religion. Filled from other members of the same household where that household had one consistent religion, otherwise No Religion. Four categories with one or two entries were merged into Other Religion, including one respondent who had written "Private".
+Age. One blank belonged to a daughter in a household headed by a 30 year old man. The column mean of 37 would have made her older than her father, so the mean age of children under 12 was used instead.
+Infirmity. 7,721 blanks meant no disability, not missing data, so they were filled as None.
+
+The cleaned file is saved as Cleaned_census_data.csv.
+Repository contents
+.
+
+├── census-analysis/
+
+│   ├── census.ipynb                              # cleaning, analysis, visualisation
+
+│   └── FUNDAMENTALS OF DATA SCIENCE PROJECT.pdf  # full written report
+
 └── README.md
 
+The notebook shows how. The PDF explains why it matters to a council making the decision.
+Built with
+Python, pandas, NumPy, Matplotlib, Seaborn, Jupyter.
+References
+Office for National Statistics (2022) Census 2021: age structure, religion, household composition, disability, unemployment, and occupancy rating for England and Wales.
 
-- **`census.ipynb`** shows *how* the analysis was performed.
-- **The PDF report** explains *why the findings matter* and how they inform real decisions.
+Marriage and Civil Partnership (Minimum Age) Act 2022.
+Author
+Rosemary Akpovi MSc Artificial Intelligence and Data Science, University of Hull
 
----
 
-## 🧹 Data Preparation & Analysis
-
-The project includes:
-- Thorough data auditing and cleaning of missing, inconsistent, and mis-typed values  
-- Intelligent handling of incomplete household attributes using grouped inference  
-- Standardisation of demographic variables for consistency and reliability  
-- Exploratory data analysis supported by clear, interpretable visualisations  
-- Population structure analysis using age distribution and dependency ratios  
-
-The notebook is fully reproducible and clearly commented to reflect professional data-science standards.
-
----
-
-## 📈 Key Insights
-
-- Adults aged **35–39** form the largest population group, indicating a strong working-age core.
-- Transport infrastructure, particularly rail, is a high-priority investment due to commuter and student density.
-- Demand is highest for **high-density, smaller housing units**, driven by small household sizes.
-- Long-term planning should prioritise **elderly care facilities** due to rising dependency ratios.
-- Employment and training programmes are important but secondary to immediate infrastructure needs.
-
-All conclusions are data-driven and supported by visual evidence.
-
----
-
-## 🧠 Why This Project Matters
-
-This repository demonstrates my ability to:
-- Clean and structure real-world datasets  
-- Apply statistical reasoning to social and economic data  
-- Communicate insights clearly to technical and non-technical audiences  
-- Translate analysis into practical planning and investment recommendations  
-
-It reflects how I approach data science in practice: not just analysing data, but supporting informed decision-making.
-
----
-
-## 🛠 Tools & Technologies
-
-- Python  
-- Pandas, NumPy  
-- Matplotlib, Seaborn  
-- Jupyter Notebook  
-
----
-
-## 👤 Author
-
-**Rosemary Akpovi**  
-MSc Artificial Intelligence & Data Science  
-Data Analyst | AI & Data Science Practitioner
